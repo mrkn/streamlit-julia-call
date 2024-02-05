@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "streamlit-julia-call"
+version = "0.1.0"
+description = "An extension to Streamlit that enables to call Julia from Streamlit applications"
+authors = ["Kenta Murata <mrkn@mrkn.jp>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

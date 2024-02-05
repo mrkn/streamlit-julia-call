@@ -4,6 +4,10 @@
 
 This is an extension to Streamlit that enables calling Julia from Streamlit applications.
 
+## Demo application
+
+The simple demo application is available in the [streamlit-julia-call-demo](https://github.com/mrkn/streamlit-julia-call-demo) repository.
+
 ## Installation
 
 Currently, this hasn't been published to any public package repositories.

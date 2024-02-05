@@ -8,6 +8,9 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.10"
+streamlit = "^1.31.0"
+result = "^0.16.0"
+julia = "^0.6.2"
 
 
 [build-system]

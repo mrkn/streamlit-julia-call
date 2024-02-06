@@ -49,7 +49,7 @@ We want to add a feature for initializing Julia runtime environment in v0.4.0. T
 
 #### v0.5.0
 
-In v0.5.0 we want to realize the concurrent execution of Julia code.
+In v0.5.0 we want to realize the parallel execution of Julia code when `JULIA_NUM_THREADS` > 1.
 
 #### v1.0.0
 

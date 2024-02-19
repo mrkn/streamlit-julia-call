@@ -12,6 +12,10 @@ result = "^0.16.0"
 julia = "^0.6.2"
 
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.1"
+pytest-playwright = "^0.4.4"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

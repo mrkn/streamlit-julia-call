@@ -19,6 +19,22 @@ If you use poetry it's done by following command:
 $ poetry add git+https://github.com/mrkn/streamlit-julia-call.git
 ```
 
+## Development
+
+### Running tests with playwright
+
+First, you need to install playwright before running tests.  To prepare playwright, execute the following command.
+
+```
+$ poetry run python -m playwright install --with-deps
+```
+
+You can run all the tests that use playwright by the command below.
+
+```
+$ make tests-playwright
+```
+
 ## Project status
 
 This project is currently a work in progress and in the proof-of-concept stage.

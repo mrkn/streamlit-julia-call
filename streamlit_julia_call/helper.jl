@@ -1,5 +1,10 @@
 module StreamlitHelper
 
+function eval_for_session(sessionid::String, str::String)
+    ast = Meta.parse("begin\n$(str)\nend")
+    Main.eval(ast)
+end
+
 _showable(a::AbstractVector{<:MIME}, x) = any(m -> showable(m, x), a)
 _showable(m, x) = showable(m, x)
 

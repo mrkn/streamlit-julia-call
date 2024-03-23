@@ -124,7 +124,8 @@ def julia_call(target):
 @julia_call
 def julia_eval(julia, src: str):
     from julia import Main
-    return Main.StreamlitHelper.eval_for_session("", src)
+    script_module = sys.modules["__main__"]
+    return Main.StreamlitHelper.eval_for_session(script_module, src)
 
 
 @julia_call

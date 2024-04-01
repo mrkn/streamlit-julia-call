@@ -68,6 +68,7 @@ end
 
 function eval_for_session(sessionid::String, py_script_module::PyPtr, str::String)
     mod = get_script_module(sessionid, py_script_module)
+    @info "eval_for_session" mod py_script_module sessionid
     ast = Meta.parse("begin\n$(str)\nend")
     mod.eval(ast)
 end

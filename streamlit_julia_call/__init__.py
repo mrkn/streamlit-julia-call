@@ -124,8 +124,9 @@ def julia_call(target):
 @julia_call
 def julia_eval(julia, src: str):
     from julia import Main
+    ctx = streamlit.runtime.scriptrunner.get_script_run_ctx()
     script_module = sys.modules["__main__"]
-    return Main.StreamlitHelper.eval_for_session(script_module, src)
+    return Main.StreamlitHelper.eval_for_session(ctx.session_id, script_module, src)
 
 
 @julia_call

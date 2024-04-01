@@ -27,11 +27,14 @@ function ispythonmodule(pyobj::PyPtr)
 end
 
 function get_script_module(sessionid::String, py_script_module::PyPtr)
+    @info "get_script_module" sessionid py_script_module
+
     if !ispythonmodule(py_script_module)
         throw(ArgumentError("get_script_module: a Python module is required"))
     end
 
     if ispynull(script_module_weakref_callback_obj)
+        @info "get_script_module: Initialize script_module_weakref_callback_obj"
         cf = @cfunction(script_module_removal_callback, PyPtr, (PyPtr, PyPtr))
         script_module_weakref_callback_method[] = PyMethodDef("weakref_callback", cf, METH_O)
         copy!(script_module_weakref_callback_obj,
@@ -41,12 +44,16 @@ function get_script_module(sessionid::String, py_script_module::PyPtr)
     end
 
     if haskey(session_weakmodule_cache, sessionid)
+        @info "get_script_module: session_weakmodule_cache has a value to the given sessionid"
         weakmod = session_weakmodule_cache[sessionid]
         pymod = @pycheckn ccal((@pysym :PyWeakRef_GetObject), PyPtr, (PyPtr,), weakmod)
+
+        @info "get_script_module" weakmod pymod
 
         if py_script_module !== pymod
             # On the case that the new python module is attached to the given session,
             # we need to replace the script running module in Julia side
+            @info "get_script_module: python module was replaced"
             delete!(script_module_cache, weakmod)
             delete!(session_weakmodule_cache, sessionid)
             return get_script_module(sessionid, py_script_module)
@@ -54,21 +61,26 @@ function get_script_module(sessionid::String, py_script_module::PyPtr)
     end
 
     if !haskey(session_weakmodule_cache, sessionid)
+        @info "get_script_module: session_weakmodule_cache does not have a value to the given sessionid"
         weakmod = @pycheckn ccall((@pysym :PyWeakRef_New), PyPtr, (PyPtr, PyPtr),
                                   py_script_module, script_module_weakref_callback_obj)
         session_weakmodule_cache[sessionid] = weakmod
+        @info "get_script_module: register a weakmod to the sessionid" sessionid weakmod
     end
 
     if haskey(script_module_cache, weakmod)
+        @info "get_script_module: script_module already exists"
         script_module_cache[weakmod]
     else
+        @info "get_script_module: script_module is newly created"
         script_module_cache[weakmod] = Module()
     end
 end
 
 function eval_for_session(sessionid::String, py_script_module::PyPtr, str::String)
+    @info "eval_for_session" sessionid py_script_module
     mod = get_script_module(sessionid, py_script_module)
-    @info "eval_for_session" mod py_script_module sessionid
+    @info "eval_for_session: script_module is obtained" mod
     ast = Meta.parse("begin\n$(str)\nend")
     mod.eval(ast)
 end

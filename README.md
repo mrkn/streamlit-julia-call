@@ -37,11 +37,11 @@ We have outlined several key milestones for future versions
 
 #### v0.2.0 (WIP)
 
-In the development of the version v0.2.0, we're focusing to support multiple sessions.
+In the version v0.2.0, we want to migrate to PythonCall/juliacall.
 
 #### v0.3.0
 
-In the version v0.3.0, we want to add juliacall support.
+In the development of the version v0.3.0, we're focusing to support multiple sessions.
 
 #### v0.4.0
 

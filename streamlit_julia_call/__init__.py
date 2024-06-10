@@ -84,6 +84,7 @@ def _init_julia(ready_event, script_run_ctx):
 
     helper_jl_path = os.path.abspath(os.path.join(__file__, "..", "helper.jl"))
     julia.eval(f"""
+    println("Loading helper.jl")
     include("{helper_jl_path}")
     """)
 
@@ -121,8 +122,14 @@ def julia_call(target):
 
 
 @julia_call
-def julia_eval(julia, src):
-    return julia.eval(src)
+def julia_eval(julia, src: str):
+    from julia import Main
+    ctx = streamlit.runtime.scriptrunner.get_script_run_ctx()
+    script_module = sys.modules["__main__"]
+    print(f"juilia_eval: session_id={ctx.session_id}, script_module={script_module}")
+    print(f"juilia_eval: eval_for_session={Main.StreamlitHelper.eval_for_session}")
+    print(f"juilia_eval: src={src}")
+    return Main.StreamlitHelper.eval_for_session(ctx.session_id, script_module, src)
 
 
 @julia_call
